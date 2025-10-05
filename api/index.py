@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 
 # Load sample telemetry bundle
-with open("telemetry.json", "r") as f:
+with open("q-vercel-latency.json", "r") as f:
     telemetry_data = json.load(f)
 
 app = FastAPI()
