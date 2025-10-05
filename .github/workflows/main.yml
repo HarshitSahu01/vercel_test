@@ -1,7 +1,17 @@
+name: Test Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   test:
+    runs-on: ubuntu-latest   # <-- required
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: 23f2001635@ds.study.iitm.ac.in
         run: echo "Hello, world!"
-        
