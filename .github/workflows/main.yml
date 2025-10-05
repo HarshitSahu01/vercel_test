@@ -1,10 +1,11 @@
-name: Test Workflow
+name: Combined Workflow
 
 on:
-  push:    # triggers on any commit
-  pull_request:   # triggers on PRs
+  push:
+  pull_request:
 
 jobs:
+  # Job 1: Test workflow
   test:
     runs-on: ubuntu-latest
     steps:
@@ -15,3 +16,28 @@ jobs:
       # Step 2: Run your email-named step
       - name: 23f2001635@ds.study.iitm.ac.in
         run: echo "Hello, world!"
+
+  # Job 2: Cache workflow
+  cache-job:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Cache something trivial
+      - name: Cache dummy folder
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: .cache_dummy  # can be empty; just needs a path
+          key: cache-72a6303
+
+      # Step 3: Prime cache result
+      - name: prime-cache-72a6303
+        run: |
+          if [ "${{ steps.cache-step.outputs.cache-hit }}" == "true" ]; then
+            echo "Cache hit!"
+          else
+            echo "Cache miss!"
+          fi
