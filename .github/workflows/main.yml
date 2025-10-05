@@ -2,7 +2,7 @@ name: Test Workflow
 
 on:
   push:    # triggers on any commit
-  pull_request
+  pull_request:   # triggers on PRs
 
 jobs:
   test:
