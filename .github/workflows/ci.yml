@@ -1,0 +1,42 @@
+name: CI with Cache
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (or any language/runtime you need)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      # Step 3: Cache dependencies
+      - name: Cache dependencies
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm       # path to cache (example: Node.js npm cache)
+          key: cache-72a6303
+
+      # Step 4: Prime cache result
+      - name: prime-cache-72a6303
+        run: |
+          if [ "${{ steps.cache-step.outputs.cache-hit }}" == "true" ]; then
+            echo "Cache hit!"
+          else
+            echo "Cache miss!"
+          fi
+
+      # Step 5: Install dependencies
+      - name: Install dependencies
+        run: npm install
